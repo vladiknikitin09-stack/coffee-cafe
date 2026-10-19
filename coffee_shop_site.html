@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Кофейня «Тёплый момент»</title>
+  <style>
+    :root {
+      --bg: #fbf8f3;
+      --accent: #d4a373;
+      --dark: #3e2723;
+      --card: #fff;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg);
+      color: var(--dark);
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 5%;
+      background: rgba(62, 39, 35, 0.95);
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo { font-weight: bold; font-size: 1.4rem; }
+    nav button {
+      background: none; border: 1px solid white; color: white; padding: 0.5rem 1rem; cursor: pointer; border-radius: 4px;
+    }
+    main { padding: 0 5%; }
+
+    /* Первый экран */
+    .hero {
+      text-align: center;
+      padding: 4rem 0;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080"><rect width="1920" height="1080" fill="%23cba174"/><text x="50%25" y="50%25" font-family="Arial" font-size="48" fill="%23fff" text-anchor="middle" dominant-baseline="middle">Уют и кофе</text></svg>') no-repeat center/cover;
+      color: white;
+      position: relative;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.3);
+    }
+    .hero-content { position: relative; z-index: 1; }
+    .hero h1 { margin: 0 0 0.5rem; font-size: 2.5rem; }
+    .hero p { margin: 0 0 2rem; font-size: 1.2rem; }
+    .btn-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .btn-primary { background: white; color: var(--dark); }
+    .btn-secondary { background: transparent; color: white; border: 1px solid white; }
+    .btn:hover { transform: scale(1.05); }
+
+    section { padding: 3rem 0; }
+    h2 { text-align: center; margin-bottom: 2rem; color: var(--dark); }
+    
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .card {
+      background: var(--card);
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      text-align: center;
+    }
+    .card img { width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem; }
+    .tag {
+      display: inline-block;
+      background: #eee;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+    }
+
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; text-align: center; }
+    .feature-item { background: var(--card); padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .promo { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .promo-card { background: white; padding: 1.5rem; border-radius: 12px; border-left: 5px solid var(--accent); }
+
+    .about-container { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+    .gallery-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+    .gallery-img { width: 100%; height: 180px; object-fit: cover; border-radius: 8px; }
+
+    .menu-filters { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; margin-bottom: 1.5rem; }
+    .filter-btn {
+      padding: 0.5rem 1rem; border: 1px solid #ddd; background: white; cursor: pointer; border-radius: 20px;
+    }
+    .filter-btn.active { border-color: var(--accent); color: var(--accent); }
+    .menu-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; }
+    .menu-item {
+      background: white; padding: 1rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .price { font-weight: bold; color: var(--dark); font-size: 1.1rem; display: block; margin: 0.5rem 0; }
+
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+    input, textarea, select {
+      width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box;
+    }
+    .full-width { grid-column: 1 / -1; }
+    .map-block { height: 300px; background: #eee; border-radius: 12px; overflow: hidden; }
+    .map-block iframe { width: 100%; height: 100%; border: none; }
+
+    .news-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .news-item { background: white; padding: 1.5rem; border-radius: 12px; }
+
+    footer { background: var(--dark); color: white; text-align: center; padding: 2rem 5%; margin-top: 3rem; }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 1.8rem; }
+      .btn-group { flex-direction: column; }
+      .about-container { grid-template-columns: 1fr; }
+      .promo { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">Кофейня «Тёплый момент»</div>
+    <nav>
+      <button onclick="document.querySelector('#menu-section').scrollIntoView({behavior:'smooth'})">Меню</button>
+      <button onclick="document.querySelector('#contacts').scrollIntoView({behavior:'smooth'})">Контакты</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Первый экран -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Уют и хороший кофе каждый день</h1>
+        <p>Место, где можно спокойно поработать, встретиться с друзьями или просто насладиться любимым напитком.</p>
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="document.querySelector('#takeout-form').scrollIntoView({behavior:'smooth'})">Заказать кофе навынос</button>
+          <button class="btn btn-secondary" onclick="document.querySelector('#booking-form').scrollIntoView({behavior:'smooth'})">Забронировать столик</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Наши хиты -->
+    <section id="hits">
+      <h2>Наши хиты</h2>
+      <div class="grid-3">
+        <div class="card">
+          <!-- Путь к фото + заглушка, если фото нет -->
+          <img src="img/cappuccino.jpg" alt="Капучино" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27400%27 height=%27200%27><rect width=%27400%27 height=%27200%27 fill=%27%23d4a373%27/><text x=%2750%25%27 y=%2750%25%27 font-family=%27Arial%27 font-size=%2724%27 fill=%27%23fff%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27>Капучино</text></svg>'">
+          <h3>Капучино</h3>
+          <p>На свежем молоке, 300 мл</p>
+          <span class="price">320 ₽</span>
+          <button class="btn btn-primary" onclick="addToCart('Капучино, 320 ₽')">В заказ</button>
+        </div>
+        <div class="card">
+          <img src="img/latte.jpg" alt="Латте" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27400%27 height=%27200%27><rect width=%27400%27 height=%27200%27 fill=%27%23cba174%27/><text x=%2750%25%27 y=%2750%25%27 font-family=%27Arial%27 font-size=%2724%27 fill=%27%23fff%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27>Латте</text></svg>'">
+          <h3>Латте</h3>
+          <p>С нежной молочной пеной</p>
+          <span class="price">330 ₽</span>
+          <button class="btn btn-primary" onclick="addToCart('Латте, 330 ₽')">В заказ</button>
+        </div>
+        <div class="card">
+          <img src="img/raf.jpg" alt="Раф" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27400%27 height=%27200%27><rect width=%27400%27 height=%27200%27 fill=%27%23a88b66%27/><text x=%2750%25%27 y=%2750%25%27 font-family=%27Arial%27 font-size=%2724%27 fill=%27%23fff%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27>Раф</text></svg>'">
+          <h3>Раф</h3>
+          <p>Ванильно-сливочный вкус</p>
+          <span class="price">350 ₽</span>
+          <button class="btn btn-primary" onclick="addToCart('Раф, 350 ₽')">В заказ</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Преимущества -->
+    <section>
+      <h2>Почему выбирают нас</h2>
+      <div class="features-grid">
+        <div class="feature-item">
+          <h3>Свежеобжаренные зёрна</h3>
+          <p>Обжариваем небольшими партиями для яркого вкуса.</p>
+        </div>
+        <div class="feature-item">
+          <h3>Собственная выпечка</h3>
+          <p>Готовим с утра, чтобы она была свежей весь день.</p>
+        </div>
+        <div class="feature-item">
+          <h3>Wi‑Fi и розетки</h3>
+          <p>Удобно для работы и учёбы.</p>
+        </div>
+        <div class="feature-item">
+          <h3>Можно с питомцем</h3>
+          <p>Любим гостей и их четвероногих друзей.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Акции -->
+    <section>
+      <h2>Акции</h2>
+      <div class="promo">
+        <div class="promo-card">
+          <h3>Скидка 20% по будням до 11:00</h3>
+          <p>Начните день выгодно — приходите пораньше.</p>
+        </div>
+        <div class="promo-card">
+          <h3>Пятый кофе бесплатно</h3>
+          <p>По нашей карте лояльности — каждый пятый напиток в подарок.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- О нас -->
+    <section id="about">
+      <h2>О нас</h2>
+      <div class="about-container">
+        <div>
+          <p>Мы открыли кофейню, чтобы в городе было место, где можно спокойно выпить кофе, поработать или посидеть с друзьями. Зерно обжариваем небольшими партиями, чтобы вкус был ярким. Выпечку готовим с утра, поэтому она всегда свежая. В нашей команде — бариста, которые любят своё дело и готовы подсказать, какой кофе подойдёт именно вам.</p>
+        </div>
+        <div>
+          <img src="img/barista.jpg" alt="Бариста за работой" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27400%27 height=%27250%27><rect width=%27400%27 height=%27250%27 fill=%27%233e2723%27/><text x=%2750%25%27 y=%2750%25%27 font-family=%27Arial%27 font-size=%2724%27 fill=%27%23fff%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27>Бариста за работой</text></svg>'" style="width:100%; border-radius:12px;">
+        </div>
+      </div>
+    </section>
+
+    <!-- Фоторяд -->
+<section id="atmosphere" style="padding: 3rem 0; background-color: #fff;">
+  <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+    
+    <h2 style="text-align: center; margin-bottom: 2rem; color: #3e2723; font-weight: 400; font-size: 1.8rem;">Атмосфера нашей кофейни</h2>
+
+    <!-- Сетка: 4 колонки на ПК, на планшете 2, на телефоне 1 -->
+    <div class="atmosphere-grid" style="
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
+      gap: 1rem;
+    ">
+      
+      <!-- Карточка 1: Интерьер -->
+      <div style="overflow: hidden; border-radius: 12px;">
+        <img src="img/interior.jpg" alt="Интерьер кофейни" 
+          onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'width:100%; height:200px; background:#cba174; display:flex; align-items:center; justify-content:center; color:#fff; font-size:1.2rem;\'>Фото интерьера</div>'"
+          style="width: 100%; height: 100%; object-fit: cover; display: block;">
+      </div>
+
+      <!-- Карточка 2: Окно -->
+      <div style="overflow: hidden; border-radius: 12px;">
+        <img src="img/window.jpg" alt="Зона у окна" 
+          onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'width:100%; height:200px; background:#e6d9c0; display:flex; align-items:center; justify-content:center; color:#3e2723; font-size:1.2rem;\'>Окно</div>'"
+          style="width: 100%; height: 100%; object-fit: cover; display: block;">
+      </div>
+
+      <!-- Карточка 3: Напитки -->
+      <div style="overflow: hidden; border-radius: 12px;">
+        <img src="img/drinks.jpg" alt="Напитки" 
+          onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'width:100%; height:200px; background:#d4a373; display:flex; align-items:center; justify-content:center; color:#fff; font-size:1.2rem;\'>Напитки</div>'"
+          style="width: 100%; height: 100%; object-fit: cover; display: block;">
+      </div>
+
+      <!-- Карточка 4: Бариста -->
+      <div style="overflow: hidden; border-radius: 12px;">
+        <img src="img/process.jpg" alt="Бариста за работой" 
+          onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'width:100%; height:200px; background:#3e2723; display:flex; align-items:center; justify-content:center; color:#fff; font-size:1.2rem;\'>Бариста</div>'"
+          style="width: 100%; height: 100%; object-fit: cover; display: block;">
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+    <!-- Меню -->
+    <section id="menu-section">
+      <h2>Меню</h2>
+      <div class="menu-filters">
+        <button class="filter-btn active" onclick="filterMenu('all')">Все</button>
+        <button class="filter-btn" onclick="filterMenu('coffee')">Кофе</button>
+        <button class="filter-btn" onclick="filterMenu('tea')">Чай и напитки</button>
+
+      </div>
+      <div class="menu-list">
+        <!-- Кофе -->
+        <div class="menu-item" data-category="coffee">
+          <img src="img/espresso.jpg" alt="Эспрессо" class="card-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27400%27 height=%27200%27><rect width=%27400%27 height=%27200%27 fill=%27%23d4a373%27/><text x=%2750%25%27 y=%2750%25%27 font-family=%27Arial%27 font-size=%2724%27 fill=%27%23fff%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27>Эспрессо</text></svg>'">
+          <h3>Эспрессо</h3>
+          <p class="short-desc">Крепкий, насыщенный, 30 мл</p>
+          <span class="price">220 ₽</span>
+        </div>
+        <div class="menu-item" data-category="coffee">
+          <img src="img/americano.jpg" alt="Американо" class="card-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27400%27 height=%27200%27><rect width=%27400%27 height=%27200%27 fill=%27%23cba174%27/><text x=%2750%25%27 y=%2750%25%27 font-family=%27Arial%27 font-size=%2724%27 fill=%27%23fff%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27>Американо</text></svg>'">
+          <h3>Американо</h3>
+          <p class="short-desc">Эспрессо с горячей водой, 250 мл</p>
+          <span class="price">240 ₽</span>
+        </div>
+        <div class="menu-item" data-category="coffee">
+          <img src="img/filter.jpg" alt="Фильтр-кофе" class="card-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27400%27 height=%27200%27><rect width=%27400%27 height=%27200%27 fill=%27%23a88b66%27/><text x=%2750%25%27 y=%2750%25%27 font-family=%27Arial%27 font-size=%2724%27 fill=%27%23fff%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27>Фильтр-кофе</text></svg>'">
+          <h3>Фильтр-кофе</h3>
+          <p class="short-desc">Чистый вкус, 300 мл</p>
+          <span class="price">260 ₽</span>
+        </div>
+
+        <!-- Чай и напитки -->
+        <div class="menu-item" data-category="tea">
+          <img src="img/black-tea.jpg" alt="Чёрный чай" class="card-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27400%27 height=%27200%27><rect width=%27400%27 height=%27200%27 fill=%27%238b5f3c%27/><text x=%2750%25%27 y=%2750%25%27 font-family=%27Arial%27 font-size=%2724%27 fill=%27%23fff%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27>Чёрный чай</text></svg>'">
+          <h3>Чёрный чай</h3>
+          <p class="short-desc">Классический цейлонский, 400 мл</p>
+          <span class="price">180 ₽</span>
+        </div>
+        <div class="menu-item" data-category="tea">
+          <img src="img/green-tea.jpg" alt="Зелёный чай" class="card-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27400%27 height=%27200%27><rect width=%27400%27 height=%27200%27 fill=%27%237f9ea9%27/><text x=%2750%25%27 y=%2750%25%27 font-family=%27Arial%27 font-size=%2724%27 fill=%27%23fff%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27>Зелёный чай</text></svg>'">
+          <h3>Зелёный чай</h3>
+          <p class="short-desc">Сенча, освежающий, 400 мл</p>
+          <span class="price">180 ₽</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Контакты -->
+    <section id="contacts">
+      <h2>Контакты</h2>
+      <div class="promo">
+        <div class="promo-card">
+          <h3>Адрес</h3>
+          <p>г. Москва, ул. Уютная, д. 10</p>
+        </div>
+        <div class="promo-card">
+          <h3>Часы работы</h3>
+          <p>Пн–Пт: 08:00–22:00<br>Сб–Вс: 09:00–23:00</p>
+        </div>
+      </div>
+      <div class="map-block">
+        <!-- Сюда можно вставить iframe с Яндекс.Картами или Google Maps -->
+        <p style="text-align:center; padding:1rem;">Карта будет здесь</p>
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; 2024 Кофейня «Тёплый момент». Все права защищены.</p>
+    </footer>
+  </main>
+
+  <script>
+    // Простая функция корзины (выводит в консоль)
+    function addToCart(item) {
+      console.log('В заказ добавлено:', item);
+      alert('Товар добавлен в заказ: ' + item);
+    }
+
+    // Фильтр меню (упрощённый)
+    function filterMenu(category) {
+      const items = document.querySelectorAll('.menu-item');
+      const buttons = document.querySelectorAll('.filter-btn');
+      
+      // Обновляем кнопки
+      buttons.forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      // Фильтруем карточки
+      items.forEach(item => {
+        if (category === 'all' || item.dataset.category === category) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
